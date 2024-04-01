@@ -6,7 +6,6 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.time.LocalDateTime;
 
 @Component
 public class MyMetaObjectHandler implements MetaObjectHandler {
@@ -21,7 +20,7 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.strictInsertFill(metaObject, "updateTime", LocalDateTime::now, LocalDateTime.class);
+        this.strictInsertFill(metaObject, "updateTime", Date::new, Date.class);
 
     }
 }
