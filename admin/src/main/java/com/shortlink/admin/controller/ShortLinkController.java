@@ -40,8 +40,11 @@ public class ShortLinkController {
 
     /**
      * 修改短链接
+     *     "validDateType": 1,
+     *     "validDate": "1970-01-01 08:00:00",
+     *     "describe": "do mollit"
      */
-    @PutMapping("/api/short-link/admin/v1/update")
+    @PostMapping("/api/short-link/admin/v1/update")
     public Result<Void> updateShortLink(@RequestBody ShortLinkUpdateReqDTO requestParam) {
         shortLinkRemoteService.updateShortLink(requestParam);
         return Results.success();
