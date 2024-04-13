@@ -12,10 +12,6 @@ import java.util.Date;
 public class ShortLinkCreateReqDTO {
 
 
-    /**
-     * ID
-     */
-    private Long id;
 
     /**
      * 域名

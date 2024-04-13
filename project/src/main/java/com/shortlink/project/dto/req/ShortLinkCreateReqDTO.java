@@ -13,11 +13,6 @@ public class ShortLinkCreateReqDTO {
 
 
     /**
-     * ID
-     */
-    private Long id;
-
-    /**
      * 域名
      */
     private String domain;
