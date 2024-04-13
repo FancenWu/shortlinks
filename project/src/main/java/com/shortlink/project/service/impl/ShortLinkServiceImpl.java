@@ -105,7 +105,12 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
                 .orderByDesc(ShortLinkDO::getCreateTime);
 
         IPage<ShortLinkDO> resultPage = baseMapper.selectPage(requestParam, queryWrapper);
-        return resultPage.convert(each -> BeanUtil.toBean(each, ShortLinkPageRespDTO.class));
+        return resultPage.convert(each -> {
+            ShortLinkPageRespDTO ressult = BeanUtil.toBean(each, ShortLinkPageRespDTO.class);
+            ressult.setDomain("http://" + each.getFullShortUrl());
+            return ressult;
+
+        });
     }
 
     @Transactional(rollbackFor = Exception.class)
