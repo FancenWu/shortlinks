@@ -24,6 +24,7 @@ import com.shortlink.project.dto.resp.ShortLinkGroupCountQueryRespDTO;
 import com.shortlink.project.dto.resp.ShortLinkPageRespDTO;
 import com.shortlink.project.service.ShortLinkService;
 import com.shortlink.project.toolkit.HashUtil;
+import com.shortlink.project.toolkit.LinkUtil;
 import groovy.util.logging.Slf4j;
 import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletResponse;
@@ -95,6 +96,11 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
                 throw new ServiceException("短链接生成重复");
             }
         }
+
+        stringRedisTemplate.opsForValue().set(fullShortUrl,
+                requestParam.getOriginUrl(),
+                LinkUtil.getLinkCacheValidTime(requestParam.getValidDate()), TimeUnit.MILLISECONDS
+        );
 
         shortUriCreateCachePenetrationBloomFilter.add(fullShortUrl);
 
