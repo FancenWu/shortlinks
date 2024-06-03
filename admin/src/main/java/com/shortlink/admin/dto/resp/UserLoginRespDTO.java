@@ -18,6 +18,4 @@ public class UserLoginRespDTO {
     private String token;
 
 
-
-
 }
