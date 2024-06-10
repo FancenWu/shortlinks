@@ -10,6 +10,7 @@ import com.shortlink.admin.common.convention.result.Result;
 import com.shortlink.admin.dao.entity.GroupDO;
 import com.shortlink.admin.dao.mapper.GroupMapper;
 import com.shortlink.admin.remote.ShortLinkRemoteService;
+import com.shortlink.admin.remote.dto.req.RecycleBinRecoverReqDTO;
 import com.shortlink.admin.remote.dto.req.ShortLinkRecycleBinPageReqDTO;
 import com.shortlink.admin.remote.dto.resp.ShortLinkPageRespDTO;
 import com.shortlink.admin.service.RecycleBinService;
@@ -47,5 +48,10 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         }
         requestParam.setGidList(groupDOList.stream().map(GroupDO::getGid).toList());
         return shortLinkRemoteService.pageRecycleBinShortLink(requestParam);
+    }
+
+    @Override
+    public void recoverRecycleBin(RecycleBinRecoverReqDTO requestParam) {
+        shortLinkRemoteService.recoverRecycleBin(requestParam);
     }
 }
