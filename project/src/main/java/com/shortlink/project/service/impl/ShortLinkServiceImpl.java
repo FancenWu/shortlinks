@@ -36,6 +36,7 @@ import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jodd.util.StringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.jsoup.Jsoup;
@@ -340,12 +341,12 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
             LinkLocaleStatsDO linkLocaleStatsDO;
             if (StrUtil.isNotBlank(infoCode) && StrUtil.equals(infoCode, "10000")){
                 String province = localeResultObj.getString("province");
-                boolean unknowFlag = StrUtil.isBlank(province);
+                boolean unknownFlag = StringUtil.equals(province, "[]");
                 linkLocaleStatsDO = LinkLocaleStatsDO.builder()
                         .fullShortUrl(fullShortUrl)
-                        .province(unknowFlag ? "未知" : province)
-                        .city(unknowFlag ? "未知" : localeResultObj.getString("city"))
-                        .adcode(unknowFlag ? "未知" : localeResultObj.getString("adcode"))
+                        .province(unknownFlag ? "未知" : province)
+                        .city(unknownFlag ? "未知" : localeResultObj.getString("city"))
+                        .adcode(unknownFlag ? "未知" : localeResultObj.getString("adcode"))
                         .country("中国")
                         .cnt(1)
                         .gid(gid)
