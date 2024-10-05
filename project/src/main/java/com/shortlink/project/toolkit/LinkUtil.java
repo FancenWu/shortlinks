@@ -53,4 +53,26 @@ public class LinkUtil {
 
         return ipAddress;
     }
+
+    /**
+     * 获取用户额操作系统
+     * @param request 请求
+     * @return 操作系统
+     */
+    public static String getOs(HttpServletRequest request){
+        String userAgent = request.getHeader("User-Agent");
+        if (userAgent.toLowerCase().contains("windows")) {
+            return "Windows";
+        } else if (userAgent.toLowerCase().contains("mac")) {
+            return "Mac OS";
+        } else if (userAgent.toLowerCase().contains("linux")) {
+            return "Linux";
+        } else if (userAgent.toLowerCase().contains("android")) {
+            return "Android";
+        } else if (userAgent.toLowerCase().contains("iphone") || userAgent.toLowerCase().contains("ipad")) {
+            return "iOS";
+        } else {
+            return "UnKnown, More-Info: " + userAgent;
+        }
+    }
 }
