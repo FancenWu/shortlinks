@@ -338,14 +338,16 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
             String localeResultStr = HttpUtil.get(AMAP_REMOTE_URL, localeParamMap);
             JSONObject localeResultObj = JSON.parseObject(localeResultStr);
             String infoCode = localeResultObj.getString("infocode");
+            String actualProvince;
+            String actualCity;
             LinkLocaleStatsDO linkLocaleStatsDO;
             if (StrUtil.isNotBlank(infoCode) && StrUtil.equals(infoCode, "10000")){
                 String province = localeResultObj.getString("province");
                 boolean unknownFlag = StringUtil.equals(province, "[]");
                 linkLocaleStatsDO = LinkLocaleStatsDO.builder()
                         .fullShortUrl(fullShortUrl)
-                        .province(unknownFlag ? "未知" : province)
-                        .city(unknownFlag ? "未知" : localeResultObj.getString("city"))
+                        .province(actualProvince = unknownFlag ? "未知" : province)
+                        .city(actualCity = unknownFlag ? "未知" : localeResultObj.getString("city"))
                         .adcode(unknownFlag ? "未知" : localeResultObj.getString("adcode"))
                         .country("中国")
                         .cnt(1)
@@ -371,31 +373,36 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
                         .date(new Date())
                         .build();
                 linkBrowserStatsMapper.shortLinkBrowserState(linkBrowserStatsDO);
-                LinkAccessLogsDO linkAccessLogsDO = LinkAccessLogsDO.builder()
-                        .ip(remoteAddr)
-                        .fullShortUrl(fullShortUrl)
-                        .gid(gid)
-                        .user(uv.get())
-                        .browser(browser)
-                        .os(os)
-                        .build();
-                linkAccessLogsMapper.insert(linkAccessLogsDO);
+                String device = LinkUtil.getDevice(((HttpServletRequest) request));
                 LinkDeviceStatsDO linkDeviceStatsDO = LinkDeviceStatsDO.builder()
-                        .device(LinkUtil.getDevice(((HttpServletRequest) request)))
+                        .device(device)
                         .cnt(1)
                         .gid(gid)
                         .fullShortUrl(fullShortUrl)
                         .date(new Date())
                         .build();
                 linkDeviceStatsMapper.shortLinkDeviceState(linkDeviceStatsDO);
+                String network = LinkUtil.getNetwork(((HttpServletRequest) request));
                 LinkNetworkStatsDO linkNetworkStatsDO = LinkNetworkStatsDO.builder()
-                        .network(LinkUtil.getNetwork(((HttpServletRequest) request)))
+                        .network(network)
                         .cnt(1)
                         .gid(gid)
                         .fullShortUrl(fullShortUrl)
                         .date(new Date())
                         .build();
                 linkNetworkStatsMapper.shortLinkNetworkState(linkNetworkStatsDO);
+                LinkAccessLogsDO linkAccessLogsDO = LinkAccessLogsDO.builder()
+                        .user(uv.get())
+                        .ip(remoteAddr)
+                        .browser(browser)
+                        .os(os)
+                        .network(network)
+                        .device(device)
+                        .locale(StrUtil.join("-", "中国", actualProvince, actualCity))
+                        .gid(gid)
+                        .fullShortUrl(fullShortUrl)
+                        .build();
+                linkAccessLogsMapper.insert(linkAccessLogsDO);
             }
         } catch(Throwable ex){
             log.error("短链接访问统计异常", ex);
