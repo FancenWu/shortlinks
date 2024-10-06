@@ -63,8 +63,10 @@ public class LinkAccessLogsDO extends BaseDO {
     private String device;
 
     /**
-     * 地区
+     * 访问地区
      */
     private String locale;
+
+
 
 }
