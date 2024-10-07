@@ -417,6 +417,7 @@ public class ShortLinkServiceImpl extends ServiceImpl<ShortLinkMapper, ShortLink
                         .date(new Date())
                         .build();
                 linkStatsTodayMapper.shortLinkTodayState(linkStatsTodayDO);
+
             }
         } catch(Throwable ex){
             log.error("短链接访问统计异常", ex);
