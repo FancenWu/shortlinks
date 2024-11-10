@@ -1,21 +1,5 @@
-/*
- * Licensed to the Apache Software Foundation (ASF) under one or more
- * contributor license agreements.  See the NOTICE file distributed with
- * this work for additional information regarding copyright ownership.
- * The ASF licenses this file to You under the Apache License, Version 2.0
- * (the "License"); you may not use this file except in compliance with
- * the License.  You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
-package com.nageoffer.shortlink.project.mq.consumer;
+package com.shortlink.project.mq.consumer;
 
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.date.Week;
@@ -25,28 +9,28 @@ import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.nageoffer.shortlink.project.common.convention.exception.ServiceException;
-import com.nageoffer.shortlink.project.dao.entity.LinkAccessLogsDO;
-import com.nageoffer.shortlink.project.dao.entity.LinkAccessStatsDO;
-import com.nageoffer.shortlink.project.dao.entity.LinkBrowserStatsDO;
-import com.nageoffer.shortlink.project.dao.entity.LinkDeviceStatsDO;
-import com.nageoffer.shortlink.project.dao.entity.LinkLocaleStatsDO;
-import com.nageoffer.shortlink.project.dao.entity.LinkNetworkStatsDO;
-import com.nageoffer.shortlink.project.dao.entity.LinkOsStatsDO;
-import com.nageoffer.shortlink.project.dao.entity.LinkStatsTodayDO;
-import com.nageoffer.shortlink.project.dao.entity.ShortLinkGotoDO;
-import com.nageoffer.shortlink.project.dao.mapper.LinkAccessLogsMapper;
-import com.nageoffer.shortlink.project.dao.mapper.LinkAccessStatsMapper;
-import com.nageoffer.shortlink.project.dao.mapper.LinkBrowserStatsMapper;
-import com.nageoffer.shortlink.project.dao.mapper.LinkDeviceStatsMapper;
-import com.nageoffer.shortlink.project.dao.mapper.LinkLocaleStatsMapper;
-import com.nageoffer.shortlink.project.dao.mapper.LinkNetworkStatsMapper;
-import com.nageoffer.shortlink.project.dao.mapper.LinkOsStatsMapper;
-import com.nageoffer.shortlink.project.dao.mapper.LinkStatsTodayMapper;
-import com.nageoffer.shortlink.project.dao.mapper.ShortLinkGotoMapper;
-import com.nageoffer.shortlink.project.dao.mapper.ShortLinkMapper;
-import com.nageoffer.shortlink.project.dto.biz.ShortLinkStatsRecordDTO;
-import com.nageoffer.shortlink.project.mq.idempotent.MessageQueueIdempotentHandler;
+import com.shortlink.project.common.convention.exception.ServiceException;
+import com.shortlink.project.dao.entity.LinkAccessLogsDO;
+import com.shortlink.project.dao.entity.LinkAccessStatsDO;
+import com.shortlink.project.dao.entity.LinkBrowserStatsDO;
+import com.shortlink.project.dao.entity.LinkDeviceStatsDO;
+import com.shortlink.project.dao.entity.LinkLocaleStatsDO;
+import com.shortlink.project.dao.entity.LinkNetworkStatsDO;
+import com.shortlink.project.dao.entity.LinkOsStatsDO;
+import com.shortlink.project.dao.entity.LinkStatsTodayDO;
+import com.shortlink.project.dao.entity.ShortLinkGotoDO;
+import com.shortlink.project.dao.mapper.LinkAccessLogsMapper;
+import com.shortlink.project.dao.mapper.LinkAccessStatsMapper;
+import com.shortlink.project.dao.mapper.LinkBrowserStatsMapper;
+import com.shortlink.project.dao.mapper.LinkDeviceStatsMapper;
+import com.shortlink.project.dao.mapper.LinkLocaleStatsMapper;
+import com.shortlink.project.dao.mapper.LinkNetworkStatsMapper;
+import com.shortlink.project.dao.mapper.LinkOsStatsMapper;
+import com.shortlink.project.dao.mapper.LinkStatsTodayMapper;
+import com.shortlink.project.dao.mapper.ShortLinkGotoMapper;
+import com.shortlink.project.dao.mapper.ShortLinkMapper;
+import com.shortlink.project.dto.biz.ShortLinkStatsRecordDTO;
+import com.shortlink.project.mq.idempotent.MessageQueueIdempotentHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RLock;
@@ -64,8 +48,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-import static com.nageoffer.shortlink.project.common.constant.RedisKeyConstant.LOCK_GID_UPDATE_KEY;
-import static com.nageoffer.shortlink.project.common.constant.ShortLinkConstant.AMAP_REMOTE_URL;
+import static com.shortlink.project.common.constant.RedisKeyConstant.LOCK_GID_UPDATE_KEY;
+import static com.shortlink.project.common.constant.ShortLinkConstant.AMAP_REMOTE_URL;
 
 /**
  * 短链接监控状态保存消息队列消费者

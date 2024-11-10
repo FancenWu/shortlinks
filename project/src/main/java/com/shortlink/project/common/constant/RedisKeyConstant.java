@@ -30,4 +30,10 @@ public class RedisKeyConstant {
      */
     public static final String DELAY_QUEUE_STATS_KEY = "delay-queue-stats";
 
+    /**
+     * 短链接幂等 Key
+     */
+    public static final String LOCK_GID_UPDATE_KEY = "short-link_lock_gid_update_%s";
+
+    public static final String SHORT_LINK_STATS_STREAM_GROUP_KEY = "short-link-stats-stream-group";
 }
