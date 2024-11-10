@@ -20,5 +20,14 @@ public class RedisKeyConstant {
      */
     public static final String GOTO_IS_NULL_SHORT_LINK_KEY = "short-link_is-null_goto_%s";
 
+    /**
+     * 短链接统计前缀 Key
+     */
+    public static final String SHORT_LINK_STATS_STREAM_TOPIC_KEY = "short-link-stats-stream-topic";
+
+    /**
+     * 延迟队列统计 Key
+     */
+    public static final String DELAY_QUEUE_STATS_KEY = "delay-queue-stats";
 
 }
